@@ -6,11 +6,10 @@ gsap.registerPlugin(ScrollTrigger)
 
 // Global animation settings
 gsap.defaults({
-  duration: 1,
+  duration: 0.8,
   ease: "power2.out"
 })
 
-// Main application class
 class NewBridgeLiving {
   constructor() {
     this.isLoaded = false
@@ -40,40 +39,37 @@ class NewBridgeLiving {
   setupCursor() {
     this.cursor = document.querySelector('.cursor')
     
-    if (window.innerWidth > 1024) {
+    if (window.innerWidth > 1024 && this.cursor) {
       document.addEventListener('mousemove', this.updateCursor.bind(this))
-      document.addEventListener('mouseenter', this.showCursor.bind(this), true)
-      document.addEventListener('mouseleave', this.hideCursor.bind(this), true)
       
-      // Add hover effects for interactive elements
-      const interactiveElements = document.querySelectorAll('a, button, [data-magnetic]')
+      const interactiveElements = document.querySelectorAll('a, button, [data-magnetic], .philosophy-card')
       interactiveElements.forEach(el => {
         el.addEventListener('mouseenter', () => this.cursor.classList.add('hover'))
         el.addEventListener('mouseleave', () => this.cursor.classList.remove('hover'))
       })
+      
+      this.cursor.classList.add('active')
     }
   }
   
   updateCursor(e) {
+    if (!this.cursor) return
+    
     gsap.to(this.cursor, {
       x: e.clientX - 10,
       y: e.clientY - 10,
-      duration: 0.3,
-      ease: "power2.out"
+      duration: 0.1,
+      ease: "none"
     })
-  }
-  
-  showCursor() {
-    this.cursor.classList.add('active')
-  }
-  
-  hideCursor() {
-    this.cursor.classList.remove('active')
   }
   
   setupProgressRing() {
     this.progressRing = document.querySelector('.progress-ring')
+    if (!this.progressRing) return
+    
     const progressCircle = document.querySelector('.progress-ring-progress')
+    if (!progressCircle) return
+    
     const radius = progressCircle.r.baseVal.value
     const circumference = radius * 2 * Math.PI
     
@@ -89,7 +85,7 @@ class NewBridgeLiving {
         const offset = circumference - (progress * circumference)
         progressCircle.style.strokeDashoffset = offset
         
-        if (progress > 0.1) {
+        if (progress > 0.05) {
           this.progressRing.classList.add('visible')
         } else {
           this.progressRing.classList.remove('visible')
@@ -105,7 +101,6 @@ class NewBridgeLiving {
     const ctx = canvas.getContext('2d')
     let particles = []
     
-    // Set canvas size
     const resizeCanvas = () => {
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
@@ -114,15 +109,14 @@ class NewBridgeLiving {
     resizeCanvas()
     window.addEventListener('resize', resizeCanvas)
     
-    // Particle class
     class Particle {
       constructor() {
         this.x = Math.random() * canvas.width
         this.y = Math.random() * canvas.height
-        this.size = Math.random() * 2 + 1
-        this.speedX = (Math.random() - 0.5) * 0.5
-        this.speedY = (Math.random() - 0.5) * 0.5
-        this.opacity = Math.random() * 0.5 + 0.1
+        this.size = Math.random() * 1.5 + 0.5
+        this.speedX = (Math.random() - 0.5) * 0.3
+        this.speedY = (Math.random() - 0.5) * 0.3
+        this.opacity = Math.random() * 0.4 + 0.1
       }
       
       update() {
@@ -143,12 +137,10 @@ class NewBridgeLiving {
       }
     }
     
-    // Create particles
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 40; i++) {
       particles.push(new Particle())
     }
     
-    // Animation loop
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       
@@ -164,110 +156,107 @@ class NewBridgeLiving {
   }
   
   setupInitialStates() {
-    // Set initial states for elements that will animate
-    gsap.set('.hero-title .title-word', { y: '100%', opacity: 0 })
-    gsap.set('.hero-subtitle', { y: 30, opacity: 0 })
-    gsap.set('.hero-cta', { y: 30, opacity: 0 })
-    gsap.set('.hero-scroll', { y: 30, opacity: 0 })
+    // Hero elements
+    gsap.set('.hero-title .title-word', { y: 100, opacity: 0, rotationX: 45 })
+    gsap.set('.hero-subtitle', { y: 40, opacity: 0 })
+    gsap.set('.hero-cta', { y: 40, opacity: 0 })
+    gsap.set('.hero-scroll', { y: 20, opacity: 0 })
     
     // Bridge elements
     gsap.set('.bridge-deck', { 
-      strokeDasharray: 1000,
-      strokeDashoffset: 1000
+      strokeDasharray: "2000 2000",
+      strokeDashoffset: 2000
     })
     gsap.set('.bridge-cables line', { 
-      strokeDasharray: 100,
-      strokeDashoffset: 100,
+      strokeDasharray: "200 200",
+      strokeDashoffset: 200,
       opacity: 0 
     })
     gsap.set('.bridge-towers .tower', { scaleY: 0, transformOrigin: 'bottom' })
     
-    // Philosophy cards
-    gsap.set('.philosophy-card', { y: 60, opacity: 0 })
-    
-    // Timeline items
-    gsap.set('.timeline-item', { x: (index) => index % 2 === 0 ? -60 : 60, opacity: 0 })
+    // Section content
+    gsap.set('.section-title .title-mask', { 
+      clipPath: 'polygon(0 0, 0 0, 0 100%, 0 100%)'
+    })
+    gsap.set('.section-subtitle', { y: 50, opacity: 0 })
+    gsap.set('.philosophy-card', { y: 100, opacity: 0, scale: 0.85 })
+    gsap.set('.timeline-item', { y: 80, opacity: 0 })
     gsap.set('.timeline-marker', { scale: 0 })
-    
-    // Living features
-    gsap.set('.feature-item', { x: -30, opacity: 0 })
-    gsap.set('.visual-scene .element', { scale: 0, rotation: -10 })
-    
-    // Text masks
-    gsap.set('.title-mask', { overflow: 'hidden' })
-    
-    // Contact form elements
-    gsap.set('.form-group', { y: 20, opacity: 0 })
-    gsap.set('.contact-item', { x: 30, opacity: 0 })
+    gsap.set('.feature-item', { x: -60, opacity: 0 })
+    gsap.set('.testimonial-card', { y: 80, opacity: 0 })
+    gsap.set('.form-group', { y: 50, opacity: 0 })
+    gsap.set('.contact-item', { x: 60, opacity: 0 })
+    gsap.set('.visual-scene .element', { scale: 0.6, opacity: 0, rotation: -20 })
   }
   
   initializeAnimations() {
     this.animateHero()
     this.animateNavigation()
     this.animateBridge()
+    this.animateTextMasks()
+    this.animateSubtitles()
     this.animatePhilosophy()
     this.animateApproach()
     this.animateCommunity()
     this.animateLiving()
     this.animateContact()
-    this.animateTextMasks()
     this.setupMagneticElements()
     this.setupParallaxEffects()
   }
   
   animateHero() {
-    const heroTimeline = gsap.timeline({ delay: 0.5 })
+    const heroTl = gsap.timeline({ delay: 0.2 })
     
-    heroTimeline
+    heroTl
       .to('.hero-title .title-word', {
-        y: '0%',
+        y: 0,
         opacity: 1,
+        rotationX: 0,
         duration: 1.2,
-        stagger: 0.15,
-        ease: "power3.out"
+        stagger: 0.08,
+        ease: "back.out(1.4)"
       })
       .to('.hero-subtitle', {
         y: 0,
         opacity: 1,
         duration: 1,
         ease: "power2.out"
-      }, '-=0.6')
+      }, '-=0.8')
       .to('.hero-cta', {
         y: 0,
         opacity: 1,
         duration: 1,
         ease: "power2.out"
-      }, '-=0.4')
+      }, '-=0.6')
       .to('.hero-scroll', {
         y: 0,
         opacity: 1,
         duration: 0.8,
         ease: "power2.out"
-      }, '-=0.2')
+      }, '-=0.4')
     
-    // Parallax background
+    // Enhanced parallax with multiple layers
     ScrollTrigger.create({
       trigger: '.hero',
       start: 'top top',
       end: 'bottom top',
-      scrub: 1,
-      animation: gsap.to('.hero-gradient', {
-        yPercent: 50,
-        ease: "none"
-      })
-    })
-    
-    // Fade out hero content
-    ScrollTrigger.create({
-      trigger: '.hero',
-      start: 'top top',
-      end: 'bottom top',
-      scrub: 1,
-      animation: gsap.to('.hero-content', {
-        opacity: 0,
-        y: -100,
-        ease: "none"
-      })
+      scrub: 0.3,
+      animation: gsap.timeline()
+        .to('.hero-gradient', { 
+          yPercent: 40, 
+          scale: 1.1,
+          ease: "none" 
+        })
+        .to('.hero-content', { 
+          opacity: 0.1, 
+          y: -100,
+          scale: 0.95,
+          ease: "none" 
+        }, 0)
+        .to('.hero-particles', {
+          yPercent: 20,
+          ease: "none"
+        }, 0)
     })
   }
   
@@ -276,13 +265,12 @@ class NewBridgeLiving {
     
     ScrollTrigger.create({
       trigger: '.hero',
-      start: 'bottom 90%',
-      end: 'bottom 90%',
+      start: 'bottom 95%',
+      end: 'bottom 95%',
       onEnter: () => {
         gsap.to(nav, {
           background: 'rgba(255, 255, 255, 0.95)',
-          backdropFilter: 'blur(16px)',
-          borderBottomColor: 'rgba(0, 0, 0, 0.1)',
+          backdropFilter: 'blur(20px)',
           duration: 0.3
         })
       },
@@ -290,13 +278,12 @@ class NewBridgeLiving {
         gsap.to(nav, {
           background: 'rgba(255, 255, 255, 0.8)',
           backdropFilter: 'blur(16px)',
-          borderBottomColor: 'rgba(0, 0, 0, 0.1)',
           duration: 0.3
         })
       }
     })
     
-    // Smooth scroll for navigation links
+    // Smooth scroll navigation
     document.querySelectorAll('.nav-link[href^="#"]').forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault()
@@ -305,7 +292,7 @@ class NewBridgeLiving {
         
         if (target) {
           gsap.to(window, {
-            duration: 1.5,
+            duration: 1.2,
             scrollTo: {
               y: target,
               offsetY: 80
@@ -318,42 +305,75 @@ class NewBridgeLiving {
   }
   
   animateBridge() {
-    const bridgeTimeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: '.bridge-section',
-        start: 'top 80%',
-        end: 'bottom 20%',
-        scrub: 1
-      }
+    ScrollTrigger.create({
+      trigger: '.bridge-section',
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 0.8,
+      animation: gsap.timeline()
+        .to('.bridge-deck', {
+          strokeDashoffset: 0,
+          duration: 3,
+          ease: "none"
+        })
+        .to('.bridge-towers .tower', {
+          scaleY: 1,
+          duration: 2,
+          stagger: 0.2,
+          ease: "none"
+        }, '-=2')
+        .to('.bridge-cables line', {
+          strokeDashoffset: 0,
+          opacity: 0.8,
+          duration: 2,
+          stagger: 0.1,
+          ease: "none"
+        }, '-=1.5')
     })
     
-    bridgeTimeline
-      .to('.bridge-deck', {
-        strokeDashoffset: 0,
-        duration: 2,
-        ease: "none"
-      })
-      .to('.bridge-towers .tower', {
-        scaleY: 1,
-        duration: 1,
-        stagger: 0.2,
-        ease: "power2.out"
-      }, '-=1')
-      .to('.bridge-cables line', {
-        strokeDashoffset: 0,
-        opacity: 1,
-        duration: 1,
-        stagger: 0.1,
-        ease: "power2.out"
-      }, '-=0.5')
-    
-    // Bridge floating animation
+    // Floating animation
     gsap.to('.bridge-svg', {
       y: 10,
-      duration: 4,
+      duration: 8,
       repeat: -1,
       yoyo: true,
       ease: "sine.inOut"
+    })
+  }
+  
+  animateTextMasks() {
+    gsap.utils.toArray('.section-title .title-mask').forEach(mask => {
+      ScrollTrigger.create({
+        trigger: mask.closest('section'),
+        start: 'top bottom',
+        end: 'top 50%',
+        scrub: 0.8,
+        animation: gsap.fromTo(mask, {
+          clipPath: 'polygon(0 0, 0 0, 0 100%, 0 100%)'
+        }, {
+          clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+          ease: "none"
+        })
+      })
+    })
+  }
+  
+  animateSubtitles() {
+    gsap.utils.toArray('.section-subtitle').forEach(subtitle => {
+      ScrollTrigger.create({
+        trigger: subtitle,
+        start: 'top bottom',
+        end: 'top 60%',
+        scrub: 0.6,
+        animation: gsap.fromTo(subtitle, {
+          y: 50,
+          opacity: 0
+        }, {
+          y: 0,
+          opacity: 1,
+          ease: "none"
+        })
+      })
     })
   }
   
@@ -361,100 +381,112 @@ class NewBridgeLiving {
     gsap.utils.toArray('.philosophy-card').forEach((card, index) => {
       ScrollTrigger.create({
         trigger: card,
-        start: 'top 85%',
-        animation: gsap.to(card, {
+        start: 'top bottom',
+        end: 'top 40%',
+        scrub: 0.6,
+        animation: gsap.fromTo(card, {
+          y: 100,
+          opacity: 0,
+          scale: 0.85
+        }, {
           y: 0,
           opacity: 1,
-          duration: 1.2,
-          delay: index * 0.2,
-          ease: "power3.out"
+          scale: 1,
+          ease: "none"
         })
       })
       
-      // Hover animations
+      // Enhanced hover animations
       card.addEventListener('mouseenter', () => {
         gsap.to(card, {
-          scale: 1.02,
-          y: -8,
+          y: -15,
+          scale: 1.03,
           duration: 0.6,
-          ease: "power2.out"
+          ease: "power3.out"
         })
         
-        gsap.to(card.querySelector('.card-visual div'), {
-          scale: 1.1,
-          rotation: 10,
-          duration: 0.8,
-          ease: "elastic.out(1, 0.5)"
-        })
+        const visual = card.querySelector('.card-visual div')
+        if (visual) {
+          gsap.to(visual, {
+            scale: 1.2,
+            rotation: 15,
+            duration: 0.8,
+            ease: "elastic.out(1, 0.5)"
+          })
+        }
       })
       
       card.addEventListener('mouseleave', () => {
         gsap.to(card, {
-          scale: 1,
           y: 0,
+          scale: 1,
           duration: 0.6,
-          ease: "power2.out"
+          ease: "power3.out"
         })
         
-        gsap.to(card.querySelector('.card-visual div'), {
-          scale: 1,
-          rotation: 0,
-          duration: 0.8,
-          ease: "elastic.out(1, 0.5)"
-        })
+        const visual = card.querySelector('.card-visual div')
+        if (visual) {
+          gsap.to(visual, {
+            scale: 1,
+            rotation: 0,
+            duration: 0.8,
+            ease: "elastic.out(1, 0.5)"
+          })
+        }
       })
     })
   }
   
   animateApproach() {
-    // Animate timeline line
+    // Timeline line that follows scroll
     ScrollTrigger.create({
       trigger: '.approach-timeline',
-      start: 'top 80%',
-      end: 'bottom 20%',
-      scrub: 1,
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 0.5,
       animation: gsap.fromTo('.timeline-line', 
         { height: '0%' },
         { height: '100%', ease: "none" }
       )
     })
     
-    // Animate timeline items
+    // Timeline items that animate as they come into view
     gsap.utils.toArray('.timeline-item').forEach((item, index) => {
       const marker = item.querySelector('.timeline-marker')
-      const content = item.querySelector('.timeline-content')
+      const contentElements = item.querySelectorAll('h3, p, .timeline-meta')
+      
+      // Set initial states
+      gsap.set(contentElements, { y: 30, opacity: 0 })
       
       ScrollTrigger.create({
         trigger: item,
-        start: 'top 80%',
+        start: 'top bottom',
+        end: 'top 30%',
+        scrub: 0.6,
         animation: gsap.timeline()
-          .to(marker, {
+          .fromTo(marker, {
+            scale: 0
+          }, {
             scale: 1,
-            duration: 0.8,
-            ease: "elastic.out(1, 0.5)"
+            ease: "none"
           })
-          .to(item, {
-            x: 0,
+          .fromTo(item, {
+            y: 80,
+            opacity: 0
+          }, {
+            y: 0,
             opacity: 1,
-            duration: 1,
-            ease: "power2.out"
-          }, '-=0.4')
-      })
-      
-      // Animate content elements
-      const contentElements = content.querySelectorAll('h3, p, .timeline-meta')
-      gsap.set(contentElements, { y: 20, opacity: 0 })
-      
-      ScrollTrigger.create({
-        trigger: item,
-        start: 'top 70%',
-        animation: gsap.to(contentElements, {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: "power2.out"
-        })
+            ease: "none"
+          }, 0)
+          .fromTo(contentElements, {
+            y: 30,
+            opacity: 0
+          }, {
+            y: 0,
+            opacity: 1,
+            stagger: 0.02,
+            ease: "none"
+          }, 0.3)
       })
     })
   }
@@ -462,35 +494,48 @@ class NewBridgeLiving {
   animateCommunity() {
     this.setupTestimonialSlider()
     
-    // Animate testimonial cards entrance
     ScrollTrigger.create({
       trigger: '.community',
-      start: 'top 70%',
-      animation: gsap.fromTo('.testimonial-card',
-        { scale: 0.8, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 1, ease: "back.out(1.7)" }
-      )
+      start: 'top bottom',
+      end: 'top 40%',
+      scrub: 0.6,
+      animation: gsap.timeline()
+        .fromTo('.testimonial-card', {
+          y: 80,
+          opacity: 0
+        }, {
+          y: 0,
+          opacity: 1,
+          ease: "none"
+        })
+        .fromTo('.testimonials-nav .nav-dot', {
+          scale: 0,
+          opacity: 0
+        }, {
+          scale: 1,
+          opacity: 1,
+          stagger: 0.02,
+          ease: "none"
+        }, 0.5)
     })
   }
   
   setupTestimonialSlider() {
     const track = document.querySelector('.testimonials-track')
     const dots = document.querySelectorAll('.nav-dot')
-    const testimonials = document.querySelectorAll('.testimonial-card')
     
-    // Auto-rotate testimonials
+    if (!track || !dots.length) return
+    
     this.testimonialTimer = setInterval(() => {
       this.nextTestimonial()
     }, 5000)
     
-    // Dot navigation
     dots.forEach((dot, index) => {
       dot.addEventListener('click', () => {
         this.goToTestimonial(index)
       })
     })
     
-    // Initialize first testimonial
     this.updateTestimonialSlider()
   }
   
@@ -503,7 +548,6 @@ class NewBridgeLiving {
     this.currentTestimonial = index
     this.updateTestimonialSlider()
     
-    // Reset timer
     clearInterval(this.testimonialTimer)
     this.testimonialTimer = setInterval(() => {
       this.nextTestimonial()
@@ -513,6 +557,8 @@ class NewBridgeLiving {
   updateTestimonialSlider() {
     const track = document.querySelector('.testimonials-track')
     const dots = document.querySelectorAll('.nav-dot')
+    
+    if (!track) return
     
     gsap.to(track, {
       x: `-${this.currentTestimonial * 100}%`,
@@ -526,103 +572,12 @@ class NewBridgeLiving {
   }
   
   animateLiving() {
-    // Animate features
     gsap.utils.toArray('.feature-item').forEach((item, index) => {
       ScrollTrigger.create({
         trigger: item,
         start: 'top 85%',
         animation: gsap.to(item, {
           x: 0,
-          opacity: 1,
-          duration: 1,
-          delay: index * 0.15,
-          ease: "power2.out"
-        })
-      })
-    })
-    
-    // Animate visual scenes
-    this.setupLivingVisual()
-  }
-  
-  setupLivingVisual() {
-    const scenes = document.querySelectorAll('.visual-scene')
-    let currentScene = 0
-    
-    // Initialize elements
-    scenes.forEach((scene, sceneIndex) => {
-      const elements = scene.querySelectorAll('.element')
-      
-      if (sceneIndex === 0) {
-        // Animate first scene on scroll trigger
-        ScrollTrigger.create({
-          trigger: '.living-visual',
-          start: 'top 80%',
-          animation: gsap.to(elements, {
-            scale: 1,
-            rotation: 0,
-            duration: 1,
-            stagger: 0.2,
-            ease: "elastic.out(1, 0.5)"
-          })
-        })
-      }
-    })
-    
-    // Scene rotation
-    setInterval(() => {
-      this.switchLivingScene(currentScene, (currentScene + 1) % scenes.length)
-      currentScene = (currentScene + 1) % scenes.length
-    }, 4000)
-  }
-  
-  switchLivingScene(from, to) {
-    const scenes = document.querySelectorAll('.visual-scene')
-    const fromScene = scenes[from]
-    const toScene = scenes[to]
-    
-    // Fade out current scene
-    gsap.to(fromScene, {
-      opacity: 0,
-      scale: 0.95,
-      duration: 0.6,
-      ease: "power2.inOut",
-      onComplete: () => {
-        fromScene.classList.remove('active')
-      }
-    })
-    
-    // Fade in new scene
-    setTimeout(() => {
-      toScene.classList.add('active')
-      const elements = toScene.querySelectorAll('.element')
-      
-      gsap.fromTo(toScene, 
-        { opacity: 0, scale: 1.05 },
-        { opacity: 1, scale: 1, duration: 0.6, ease: "power2.inOut" }
-      )
-      
-      gsap.fromTo(elements,
-        { scale: 0, rotation: -10 },
-        { 
-          scale: 1, 
-          rotation: 0, 
-          duration: 1, 
-          stagger: 0.1,
-          ease: "elastic.out(1, 0.5)" 
-        }
-      )
-    }, 300)
-  }
-  
-  animateContact() {
-    // Animate form groups
-    gsap.utils.toArray('.form-group').forEach((group, index) => {
-      ScrollTrigger.create({
-        trigger: group,
-        start: 'top 90%',
-        animation: gsap.to(group, {
-          y: 0,
           opacity: 1,
           duration: 0.8,
           delay: index * 0.1,
@@ -631,7 +586,87 @@ class NewBridgeLiving {
       })
     })
     
-    // Animate contact info
+    this.setupLivingVisual()
+  }
+  
+  setupLivingVisual() {
+    const scenes = document.querySelectorAll('.visual-scene')
+    if (!scenes.length) return
+    
+    let currentScene = 0
+    
+    ScrollTrigger.create({
+      trigger: '.living-visual',
+      start: 'top 80%',
+      animation: gsap.to('.visual-scene.active .element', {
+        scale: 1,
+        opacity: 1,
+        duration: 1,
+        stagger: 0.15,
+        ease: "back.out(1.3)"
+      })
+    })
+    
+    const rotateScenes = () => {
+      const nextScene = (currentScene + 1) % scenes.length
+      this.switchLivingScene(currentScene, nextScene)
+      currentScene = nextScene
+      setTimeout(rotateScenes, 4000)
+    }
+    
+    setTimeout(rotateScenes, 3000)
+  }
+  
+  switchLivingScene(from, to) {
+    const scenes = document.querySelectorAll('.visual-scene')
+    const fromScene = scenes[from]
+    const toScene = scenes[to]
+    
+    if (!fromScene || !toScene) return
+    
+    gsap.timeline()
+      .to(fromScene, {
+        opacity: 0,
+        scale: 0.95,
+        duration: 0.5,
+        ease: "power2.inOut"
+      })
+      .call(() => {
+        fromScene.classList.remove('active')
+        toScene.classList.add('active')
+      })
+      .fromTo(toScene, 
+        { opacity: 0, scale: 1.05 },
+        { opacity: 1, scale: 1, duration: 0.5, ease: "power2.inOut" }
+      )
+      .fromTo(toScene.querySelectorAll('.element'),
+        { scale: 0.7, opacity: 0 },
+        { 
+          scale: 1, 
+          opacity: 1, 
+          duration: 0.8, 
+          stagger: 0.1,
+          ease: "back.out(1.3)" 
+        },
+        '-=0.3'
+      )
+  }
+  
+  animateContact() {
+    gsap.utils.toArray('.form-group').forEach((group, index) => {
+      ScrollTrigger.create({
+        trigger: group,
+        start: 'top 90%',
+        animation: gsap.to(group, {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          delay: index * 0.05,
+          ease: "power2.out"
+        })
+      })
+    })
+    
     gsap.utils.toArray('.contact-item').forEach((item, index) => {
       ScrollTrigger.create({
         trigger: item,
@@ -640,18 +675,19 @@ class NewBridgeLiving {
           x: 0,
           opacity: 1,
           duration: 0.8,
-          delay: index * 0.15,
+          delay: index * 0.1,
           ease: "power2.out"
         })
       })
     })
     
-    // Form interactions
     this.setupFormInteractions()
   }
   
   setupFormInteractions() {
     const form = document.getElementById('contactForm')
+    if (!form) return
+    
     const inputs = form.querySelectorAll('input, select, textarea')
     
     inputs.forEach(input => {
@@ -660,7 +696,7 @@ class NewBridgeLiving {
         if (line && line.classList.contains('input-line')) {
           gsap.to(line, {
             width: '100%',
-            duration: 0.3,
+            duration: 0.4,
             ease: "power2.out"
           })
         }
@@ -671,7 +707,7 @@ class NewBridgeLiving {
         if (line && line.classList.contains('input-line') && !e.target.value) {
           gsap.to(line, {
             width: '0%',
-            duration: 0.3,
+            duration: 0.4,
             ease: "power2.out"
           })
         }
@@ -686,65 +722,57 @@ class NewBridgeLiving {
   
   submitForm() {
     const button = document.querySelector('.contact-form .btn-primary')
-    const originalText = button.querySelector('.btn-text').textContent
+    if (!button) return
     
-    // Loading state
-    gsap.to(button, {
-      scale: 0.95,
-      duration: 0.2,
-      ease: "power2.out",
-      onComplete: () => {
-        button.querySelector('.btn-text').textContent = 'Sending...'
-        
-        // Simulate form submission
-        setTimeout(() => {
-          button.querySelector('.btn-text').textContent = 'Message Sent!'
-          gsap.to(button, {
-            scale: 1,
-            duration: 0.3,
-            ease: "elastic.out(1, 0.5)"
-          })
-          
-          setTimeout(() => {
-            button.querySelector('.btn-text').textContent = originalText
-          }, 2000)
-        }, 1500)
-      }
-    })
-  }
-  
-  animateTextMasks() {
-    gsap.utils.toArray('.title-mask').forEach(mask => {
-      ScrollTrigger.create({
-        trigger: mask,
-        start: 'top 80%',
-        animation: gsap.fromTo(mask,
-          { 
-            clipPath: 'polygon(0 0, 0 0, 0 100%, 0 100%)'
-          },
-          {
-            clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
-            duration: 1.2,
-            ease: "power2.inOut"
-          }
-        )
+    const btnText = button.querySelector('.btn-text')
+    const originalText = btnText.textContent
+    
+    gsap.timeline()
+      .to(button, {
+        scale: 0.95,
+        duration: 0.2,
+        ease: "power2.out"
       })
-    })
+      .call(() => {
+        btnText.textContent = 'Sending...'
+      })
+      .to(button, {
+        scale: 1,
+        duration: 0.3,
+        ease: "back.out(1.2)"
+      })
+      .to({}, { duration: 1.5 })
+      .call(() => {
+        btnText.textContent = 'Message Sent!'
+      })
+      .to({}, { duration: 2 })
+      .call(() => {
+        btnText.textContent = originalText
+      })
   }
   
   setupMagneticElements() {
     const magneticElements = document.querySelectorAll('[data-magnetic]')
     
     magneticElements.forEach(element => {
+      element.addEventListener('mouseenter', () => {
+        gsap.to(element, {
+          scale: 1.05,
+          duration: 0.4,
+          ease: "power2.out"
+        })
+      })
+      
       element.addEventListener('mousemove', (e) => {
         const rect = element.getBoundingClientRect()
         const x = e.clientX - rect.left - rect.width / 2
         const y = e.clientY - rect.top - rect.height / 2
         
         gsap.to(element, {
-          x: x * 0.3,
-          y: y * 0.3,
-          duration: 0.8,
+          x: x * 0.25,
+          y: y * 0.25,
+          rotation: x * 0.05,
+          duration: 0.6,
           ease: "power2.out"
         })
       })
@@ -753,103 +781,92 @@ class NewBridgeLiving {
         gsap.to(element, {
           x: 0,
           y: 0,
+          rotation: 0,
+          scale: 1,
           duration: 1.2,
-          ease: "elastic.out(1, 0.3)"
+          ease: "elastic.out(1, 0.4)"
         })
       })
     })
   }
   
   setupParallaxEffects() {
-    // Subtle parallax for section backgrounds
+    // Enhanced background parallax
     gsap.utils.toArray('.approach-bg, .contact-bg').forEach(bg => {
       ScrollTrigger.create({
         trigger: bg.parentElement,
         start: 'top bottom',
         end: 'bottom top',
-        scrub: 1,
-        animation: gsap.to(bg, {
+        scrub: 0.3,
+        animation: gsap.fromTo(bg, {
+          yPercent: -20
+        }, {
           yPercent: 20,
           ease: "none"
         })
       })
     })
     
-    // Philosophy cards parallax
+    // Philosophy cards micro-parallax
     gsap.utils.toArray('.philosophy-card').forEach((card, index) => {
       ScrollTrigger.create({
         trigger: card,
         start: 'top bottom',
         end: 'bottom top',
-        scrub: 1,
-        animation: gsap.to(card, {
-          y: (index % 2 === 0 ? -1 : 1) * 50,
+        scrub: 0.2,
+        animation: gsap.fromTo(card, {
+          y: (index % 2 === 0 ? -20 : 20)
+        }, {
+          y: (index % 2 === 0 ? 20 : -20),
           ease: "none"
         })
+      })
+    })
+    
+    // Bridge section parallax
+    ScrollTrigger.create({
+      trigger: '.bridge-section',
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 0.2,
+      animation: gsap.fromTo('.bridge-container', {
+        yPercent: -10
+      }, {
+        yPercent: 10,
+        ease: "none"
       })
     })
   }
   
   bindEvents() {
-    // Resize handler
-    window.addEventListener('resize', this.debounce(() => {
-      ScrollTrigger.refresh()
-    }, 250))
+    let resizeTimer
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer)
+      resizeTimer = setTimeout(() => {
+        ScrollTrigger.refresh()
+      }, 150)
+    })
     
-    // Visibility change handler
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
-        clearInterval(this.testimonialTimer)
-      } else {
+        if (this.testimonialTimer) clearInterval(this.testimonialTimer)
+      } else if (this.isLoaded) {
         this.testimonialTimer = setInterval(() => {
           this.nextTestimonial()
         }, 5000)
       }
     })
   }
-  
-  debounce(func, wait) {
-    let timeout
-    return function executedFunction(...args) {
-      const later = () => {
-        clearTimeout(timeout)
-        func(...args)
-      }
-      clearTimeout(timeout)
-      timeout = setTimeout(later, wait)
-    }
-  }
 }
 
-// Initialize application when DOM is ready
+// Initialize
 document.addEventListener('DOMContentLoaded', () => {
   new NewBridgeLiving()
 })
 
-// Performance optimizations
+// Performance optimization
 ScrollTrigger.config({
   autoRefreshEvents: "visibilitychange,DOMContentLoaded,load"
-})
-
-// Optimize for mobile
-if (window.innerWidth <= 768) {
-  ScrollTrigger.config({
-    ignoreMobileResize: true
-  })
-}
-
-// Preloader
-window.addEventListener('load', () => {
-  gsap.to('.preloader', {
-    opacity: 0,
-    duration: 0.5,
-    onComplete: () => {
-      const preloader = document.querySelector('.preloader')
-      if (preloader) {
-        preloader.remove()
-      }
-    }
-  })
 })
 
 // Export for debugging
