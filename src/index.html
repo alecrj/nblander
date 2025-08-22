@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Bridge Living - Transformative Recovery Community</title>
+    <link rel="stylesheet" href="./styles/main.scss">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor">
+        <div class="cursor-inner"></div>
+    </div>
+
+    <!-- Progress Indicator -->
+    <div class="progress-ring">
+        <svg class="progress-ring-svg" width="60" height="60">
+            <circle class="progress-ring-circle" stroke="rgba(255,255,255,0.3)" stroke-width="2" fill="transparent" r="28" cx="30" cy="30"/>
+            <circle class="progress-ring-progress" stroke="#fff" stroke-width="2" fill="transparent" r="28" cx="30" cy="30"/>
+        </svg>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo-mark">
+                    <svg viewBox="0 0 40 40" class="logo-svg">
+                        <path d="M5 20 L20 5 L35 20 L20 35 Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <circle cx="20" cy="20" r="3" fill="currentColor"/>
+                    </svg>
+                </div>
+                <span class="logo-text">New Bridge Living</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#philosophy" class="nav-link">Philosophy</a>
+                <a href="#approach" class="nav-link">Approach</a>
+                <a href="#community" class="nav-link">Community</a>
+                <a href="#contact" class="nav-link nav-cta">Connect</a>
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-bg">
+            <div class="hero-gradient"></div>
+            <div class="hero-particles"></div>
+            <canvas class="hero-canvas" id="heroCanvas"></canvas>
+        </div>
+        
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="title-line">
+                        <span class="title-word">Bridging</span>
+                    </span>
+                    <span class="title-line">
+                        <span class="title-word">the</span>
+                        <span class="title-word">gap</span>
+                    </span>
+                    <span class="title-line">
+                        <span class="title-word">to</span>
+                        <span class="title-word">renewal</span>
+                    </span>
+                </h1>
+                <p class="hero-subtitle">
+                    A transformative residential community designed for sustainable recovery and meaningful connection.
+                </p>
+            </div>
+            
+            <div class="hero-cta">
+                <button class="btn-primary" data-magnetic>
+                    <span class="btn-text">Begin Your Journey</span>
+                    <div class="btn-bg"></div>
+                </button>
+            </div>
+        </div>
+
+        <div class="hero-scroll">
+            <div class="scroll-text">Explore</div>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Bridge Transition -->
+    <section class="bridge-section">
+        <div class="bridge-container">
+            <svg class="bridge-svg" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                    <linearGradient id="bridgeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#667eea"/>
+                        <stop offset="50%" style="stop-color:#764ba2"/>
+                        <stop offset="100%" style="stop-color:#f093fb"/>
+                    </linearGradient>
+                    <filter id="glow">
+                        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                        <feMerge> 
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+                
+                <!-- Bridge Structure -->
+                <g class="bridge-main">
+                    <path class="bridge-deck" d="M0,200 Q300,150 600,180 Q900,210 1200,160" 
+                          stroke="url(#bridgeGradient)" stroke-width="6" fill="none" filter="url(#glow)"/>
+                    
+                    <!-- Support Cables -->
+                    <g class="bridge-cables">
+                        <line x1="300" y1="100" x2="280" y2="180" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+                        <line x1="300" y1="100" x2="320" y2="180" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+                        <line x1="600" y1="80" x2="580" y2="180" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+                        <line x1="600" y1="80" x2="620" y2="180" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+                        <line x1="900" y1="90" x2="880" y2="180" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+                        <line x1="900" y1="90" x2="920" y2="180" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+                    </g>
+                    
+                    <!-- Bridge Towers -->
+                    <g class="bridge-towers">
+                        <rect class="tower" x="295" y="50" width="10" height="150" fill="url(#bridgeGradient)"/>
+                        <rect class="tower" x="595" y="30" width="10" height="170" fill="url(#bridgeGradient)"/>
+                        <rect class="tower" x="895" y="40" width="10" height="160" fill="url(#bridgeGradient)"/>
+                    </g>
+                </g>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section class="philosophy" id="philosophy">
+        <div class="philosophy-container">
+            <div class="philosophy-header">
+                <h2 class="section-title">
+                    <span class="title-mask">Our Philosophy</span>
+                </h2>
+                <p class="section-subtitle">Recovery is not a destination but a transformation—a bridge between who you were and who you're becoming.</p>
+            </div>
+            
+            <div class="philosophy-grid">
+                <div class="philosophy-card" data-phase="foundation">
+                    <div class="card-number">01</div>
+                    <div class="card-content">
+                        <h3>Foundation</h3>
+                        <p>We begin by creating a stable, supportive environment where healing can take root. Every journey starts with a single step onto solid ground.</p>
+                    </div>
+                    <div class="card-visual">
+                        <div class="visual-foundation"></div>
+                    </div>
+                </div>
+                
+                <div class="philosophy-card" data-phase="connection">
+                    <div class="card-number">02</div>
+                    <div class="card-content">
+                        <h3>Connection</h3>
+                        <p>Through authentic relationships and shared experiences, we build the support structures that make lasting change possible.</p>
+                    </div>
+                    <div class="card-visual">
+                        <div class="visual-connection"></div>
+                    </div>
+                </div>
+                
+                <div class="philosophy-card" data-phase="growth">
+                    <div class="card-number">03</div>
+                    <div class="card-content">
+                        <h3>Growth</h3>
+                        <p>With foundation and connection in place, we nurture the personal development that leads to sustainable, meaningful transformation.</p>
+                    </div>
+                    <div class="card-visual">
+                        <div class="visual-growth"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Approach Section -->
+    <section class="approach" id="approach">
+        <div class="approach-bg">
+            <div class="approach-gradient"></div>
+        </div>
+        
+        <div class="approach-container">
+            <div class="approach-header">
+                <h2 class="section-title white">
+                    <span class="title-mask">Our Approach</span>
+                </h2>
+                <p class="section-subtitle white">Comprehensive support designed around the science of sustainable recovery.</p>
+            </div>
+            
+            <div class="approach-timeline">
+                <div class="timeline-line"></div>
+                
+                <div class="timeline-item" data-step="assessment">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-meta">Initial Assessment</div>
+                        <h3>Understanding Your Journey</h3>
+                        <p>We begin with a comprehensive evaluation to understand your unique needs, goals, and the path that brought you here.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" data-step="integration">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-meta">Community Integration</div>
+                        <h3>Finding Your Place</h3>
+                        <p>Thoughtful introduction to our community, establishing routines, and beginning to build the relationships that will support your growth.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" data-step="development">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-meta">Skill Development</div>
+                        <h3>Building Life Skills</h3>
+                        <p>Practical training in the essential skills for independent living, from daily management to career preparation.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" data-step="transition">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-meta">Transition Planning</div>
+                        <h3>Preparing for Independence</h3>
+                        <p>Gradual transition with ongoing support, ensuring you're prepared for the next chapter of your recovery journey.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section class="community" id="community">
+        <div class="community-container">
+            <div class="community-header">
+                <h2 class="section-title">
+                    <span class="title-mask">Community Voices</span>
+                </h2>
+                <p class="section-subtitle">Stories of transformation from those who have walked this path.</p>
+            </div>
+            
+            <div class="testimonials-slider">
+                <div class="testimonials-track">
+                    <div class="testimonial-card" data-index="0">
+                        <div class="testimonial-content">
+                            <blockquote>
+                                "The structure here gave me something I'd never had—genuine stability. Not just in my living situation, but in my sense of self."
+                            </blockquote>
+                            <div class="testimonial-author">
+                                <div class="author-info">
+                                    <cite>Michael R.</cite>
+                                    <span class="author-detail">Resident 2023</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card" data-index="1">
+                        <div class="testimonial-content">
+                            <blockquote>
+                                "For the first time, I felt like I belonged somewhere. The community here isn't just supportive—it's transformative."
+                            </blockquote>
+                            <div class="testimonial-author">
+                                <div class="author-info">
+                                    <cite>Sarah L.</cite>
+                                    <span class="author-detail">Alumni</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card" data-index="2">
+                        <div class="testimonial-content">
+                            <blockquote>
+                                "Recovery isn't just about stopping destructive behaviors—it's about building a life worth living. That's what happened here."
+                            </blockquote>
+                            <div class="testimonial-author">
+                                <div class="author-info">
+                                    <cite>David K.</cite>
+                                    <span class="author-detail">Alumni</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonials-nav">
+                    <button class="nav-dot active" data-slide="0"></button>
+                    <button class="nav-dot" data-slide="1"></button>
+                    <button class="nav-dot" data-slide="2"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Living Experience -->
+    <section class="living" id="living">
+        <div class="living-container">
+            <div class="living-split">
+                <div class="living-content">
+                    <h2 class="section-title">
+                        <span class="title-mask">Daily Life</span>
+                    </h2>
+                    <p class="section-subtitle">A structured environment designed to support growth, connection, and personal development.</p>
+                    
+                    <div class="living-features">
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <div class="icon-structure"></div>
+                            </div>
+                            <div class="feature-content">
+                                <h4>Structured Routine</h4>
+                                <p>Consistent daily schedules that create stability while allowing for personal growth and development.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <div class="icon-community"></div>
+                            </div>
+                            <div class="feature-content">
+                                <h4>Peer Support</h4>
+                                <p>Living alongside others on similar journeys, creating lasting bonds and mutual accountability.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <div class="icon-growth"></div>
+                            </div>
+                            <div class="feature-content">
+                                <h4>Personal Development</h4>
+                                <p>Regular sessions focused on life skills, career development, and personal goal achievement.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="living-visual">
+                    <div class="visual-container">
+                        <div class="visual-scene active" data-scene="morning">
+                            <div class="scene-elements">
+                                <div class="element element-1"></div>
+                                <div class="element element-2"></div>
+                                <div class="element element-3"></div>
+                            </div>
+                            <div class="scene-label">Morning Community</div>
+                        </div>
+                        
+                        <div class="visual-scene" data-scene="afternoon">
+                            <div class="scene-elements">
+                                <div class="element element-1"></div>
+                                <div class="element element-2"></div>
+                                <div class="element element-3"></div>
+                            </div>
+                            <div class="scene-label">Afternoon Activities</div>
+                        </div>
+                        
+                        <div class="visual-scene" data-scene="evening">
+                            <div class="scene-elements">
+                                <div class="element element-1"></div>
+                                <div class="element element-2"></div>
+                                <div class="element element-3"></div>
+                            </div>
+                            <div class="scene-label">Evening Reflection</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="contact-bg">
+            <div class="contact-gradient"></div>
+        </div>
+        
+        <div class="contact-container">
+            <div class="contact-content">
+                <div class="contact-header">
+                    <h2 class="section-title white">
+                        <span class="title-mask">Start Your Journey</span>
+                    </h2>
+                    <p class="section-subtitle white">Every transformation begins with a conversation. We're here to listen and help you find your path forward.</p>
+                </div>
+                
+                <div class="contact-form-wrapper">
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required>
+                            <div class="input-line"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                            <div class="input-line"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone">
+                            <div class="input-line"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="inquiry">How can we help?</label>
+                            <select id="inquiry" name="inquiry" required>
+                                <option value="">Please select</option>
+                                <option value="self">Information for myself</option>
+                                <option value="family">Information for a family member</option>
+                                <option value="friend">Information for a friend</option>
+                                <option value="professional">Professional inquiry</option>
+                            </select>
+                            <div class="input-line"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Tell us more about your situation</label>
+                            <textarea id="message" name="message" rows="4"></textarea>
+                            <div class="input-line"></div>
+                        </div>
+                        
+                        <div class="form-submit">
+                            <button type="submit" class="btn-primary" data-magnetic>
+                                <span class="btn-text">Send Message</span>
+                                <div class="btn-bg"></div>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-label">Phone</div>
+                    <div class="contact-value">(555) 123-4567</div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-label">Email</div>
+                    <div class="contact-value">connect@newbridgeliving.com</div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-label">Available</div>
+                    <div class="contact-value">24/7 Crisis Support</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <div class="logo-mark">
+                            <svg viewBox="0 0 40 40" class="logo-svg">
+                                <path d="M5 20 L20 5 L35 20 L20 35 Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <circle cx="20" cy="20" r="3" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <span class="logo-text">New Bridge Living</span>
+                    </div>
+                    <p class="footer-tagline">Building bridges to lasting transformation.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Programs</h4>
+                    <ul>
+                        <li><a href="#">Residential Treatment</a></li>
+                        <li><a href="#">Outpatient Services</a></li>
+                        <li><a href="#">Family Support</a></li>
+                        <li><a href="#">Alumni Network</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Insurance Information</a></li>
+                        <li><a href="#">Crisis Support</a></li>
+                        <li><a href="#">Educational Materials</a></li>
+                        <li><a href="#">Community Events</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li>Phone: (555) 123-4567</li>
+                        <li>Email: connect@newbridgeliving.com</li>
+                        <li>24/7 Crisis Line: (555) 987-6543</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-legal">
+                    <span>&copy; 2025 New Bridge Living. All rights reserved.</span>
+                    <div class="legal-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Accessibility</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="./scripts/main.js"></script>
+</body>
+</html>
